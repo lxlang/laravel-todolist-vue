@@ -1,16 +1,5 @@
-# Laravel Boilerplate
-
-This is a simple project for getting started on a new idea. 
-Instead of setting up a laravel application, you can start 
-coding what really matters, without having to worry about 
-social logins, themes or packages.
-
-Feel free to fork this. Feedback is highly appreciated. 
-
-Includes: 
-* Social Logins using `laravel/socialite`
-* An AdminLTE2 Theme by `jeroennoten/laravel-adminlte`
-* BootForm by `watson/bootstrap-form`
+# Laravel TodoList
+This is just a simple Project to create a TodoList with VueJs. 
 
 # Installation
 
@@ -18,6 +7,11 @@ Includes:
 Run `composer install`
 
 run `php artisan migrate`
+
+## Build JS
+Run `npm install`
+
+Run `npm run prod` to build JS.
 
 ## Socialite
 Choose your Social login Provider and update your .env with your credentials. 
