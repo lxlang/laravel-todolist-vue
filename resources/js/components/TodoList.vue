@@ -13,10 +13,7 @@
                                 v-bind:todo="todo"
                         ></Todo>
                     </div>
-                </div>
-
-                <div class="box box-success">
-                    <div class="box-body">
+                    <div class="box-footer">
                         <div class="input-group input-group-sm">
                             <div class="input-group-addon">
                                 <i class="fa fa-plus-square"></i>
@@ -30,6 +27,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
