@@ -15,5 +15,6 @@ Route::get('/oauth2', 'Auth\LoginController@handleProviderCallback')->name('logi
  * Authenticated Routes go in here.
  */
 Route::group(['middleware' => 'auth'], function() {
-	Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/dashboard', 'TodoController@list')->name('dashboard');
+    Route::resource('todos', 'TodoController', []);
 });
