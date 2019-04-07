@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Todo;
 use Auth;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -100,6 +101,10 @@ class TodoController extends Controller
             'done' => 'required|boolean',
         ]);
 
+        if ($todo->user_id != Auth::user()->id) {
+            throw new ModelNotFoundException();
+        }
+
         $todo->update($request->only(['name', 'done']));
 
         return response()->json($todo);
@@ -114,6 +119,10 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
+        if ($todo->user_id != Auth::user()->id) {
+            throw new ModelNotFoundException();
+        }
+
         $todo->delete();
         return response()->json($todo);
     }
