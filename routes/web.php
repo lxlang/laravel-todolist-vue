@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/', 'HomeController@welcome')
+    ->middleware('guest')
 	->name('welcome');
 
 Route::get('/login', 'Auth\LoginController@redirectToProvider')
