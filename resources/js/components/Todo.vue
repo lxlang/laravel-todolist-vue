@@ -1,21 +1,21 @@
 <template>
-    <div v-if="todo.deleted_at == null" class="input-group input-group-sm">
+    <div v-if="!deleted_at" class="input-group input-group-sm">
         <span class="input-group-btn">
-            <button v-if="!todo.done" type="button" class="btn btn-xs btn-default"
-                    @click="todo.done = true; updateTodo(todo);">
-              <i class="fa far fa-square"></i>
+            <button v-if="done" type="button" class="btn btn-xs btn-default" @click="markOpen">
+                <i class="fa far fa-check-square"></i>
             </button>
-            <button v-if="this.todo.done" type="button" class="btn btn-xs btn-default"
-                    @click="todo.done = false; updateTodo(todo);">
-              <i class="fa far fa-check-square"></i>
+            <button v-else type="button" class="btn btn-xs btn-default" @click="markDone">
+                <i class="fa far fa-square"></i>
             </button>
         </span>
-        <input v-model="todo.name" class="form-control" v-bind:class="{
-            'strikethrough': todo.done
-        }" @change="updateTodo(todo)"/>
-        <span v-if="todo.done" class="input-group-btn">
+
+        <input :value="name" class="form-control" v-bind:class="{
+            'strikethrough': done
+        }" @input.lazy="nameChanged"/>
+
+        <span v-if="done" class="input-group-btn">
             <button title="Delete" type="button" class="btn btn-xs btn-danger"
-                    @click="deleteTodo(todo)">
+                    @click="del">
                 <i class="fa fa-trash"></i>
             </button>
         </span>
@@ -26,26 +26,27 @@
     export default {
         name: "Todo",
         props: [
-            'todo',
+            'name',
+            'done',
+            'deleted_at',
         ],
+        data() {
+            return {
+            };
+        },
         methods: {
-            updateTodo: async function (todo) {
-                this.$http.put(`/todos/${todo.id}`, {
-                    name: todo.name,
-                    done: todo.done,
-                })
-                    .then(response => {
-                        todo = response.data;
-                    });
+            markDone() {
+                this.$emit('done');
             },
-            deleteTodo: async function (todo) {
-                //set it deleted immediately so the element will be not displayed.
-                todo.deleted_at = 'deleted';
-                await this.$http.delete(`/todos/${todo.id}`)
-                    .then(async response => {
-                        todo = response.data;
-                    })
-            }
-        }
+            markOpen() {
+                this.$emit('open');
+            },
+            nameChanged(event) {
+                this.$emit('nameChanged', event.target.value);
+            },
+            del() {
+                this.$emit('delete');
+            },
+        },
     }
 </script>
